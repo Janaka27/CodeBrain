@@ -10,6 +10,7 @@ use Laravel\Ai\Contracts\HasTools;
 use Laravel\Ai\Contracts\Tool;
 use Laravel\Ai\Promptable;
 use Laravel\Ai\Providers\Tools\ProviderTool;
+use Laravel\Ai\Providers\Tools\WebSearch;
 use Stringable;
 
 #[Model('gemini-3.5-flash-lite')]
@@ -50,6 +51,9 @@ class ChatAgent implements Agent, Conversational, HasTools
      */
     public function tools(): iterable
     {
-        return [];
+        return [
+            (new WebSearch)
+                ->max(5),
+        ];
     }
 }

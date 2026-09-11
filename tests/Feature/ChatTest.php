@@ -2,6 +2,7 @@
 
 use App\Ai\Agents\ChatAgent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Ai\Exceptions\RateLimitedException;
 
 uses(RefreshDatabase::class);
 
@@ -53,4 +54,19 @@ test('load chat endpoint returns conversation list', function () {
 
     $response->assertOk()
         ->assertJson([]);
+});
+
+test('chat endpoint handles RateLimitedException gracefully', function () {
+    ChatAgent::fake(function () {
+        throw RateLimitedException::forProvider('gemini');
+    });
+
+    $response = $this->postJson('/chat', [
+        'prompt' => 'Trigger rate limit',
+    ]);
+
+    $response->assertOk();
+    $content = $response->streamedContent();
+
+    expect($content)->toContain('Rate Limit Exceeded');
 });

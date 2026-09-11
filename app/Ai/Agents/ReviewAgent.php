@@ -2,12 +2,12 @@
 
 namespace App\Ai\Agents;
 
+use Laravel\Ai\Attributes\Model;
+use Laravel\Ai\Concerns\RemembersConversations;
 use Laravel\Ai\Contracts\Agent;
 use Laravel\Ai\Contracts\Conversational;
-use Laravel\Ai\Concerns\RemembersConversations;
 use Laravel\Ai\Contracts\HasTools;
 use Laravel\Ai\Contracts\Tool;
-use Laravel\Ai\Messages\Message;
 use Laravel\Ai\Promptable;
 use Laravel\Ai\Providers\Tools\ProviderTool;
 use Stringable;
@@ -22,7 +22,7 @@ class ReviewAgent implements Agent, Conversational, HasTools
      */
     public function instructions(): Stringable|string
     {
-         return <<<'PROMPT'
+        return <<<'PROMPT'
         
             You are CodeBrain, an expert code reviewer AI.
             Your goal is to analyze the code provided by the user and identify potential issues, improvements, and best practices.
