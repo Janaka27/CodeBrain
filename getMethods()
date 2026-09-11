@@ -1,0 +1,22 @@
+
+   ParseError 
+
+  syntax error, unexpected token "}"
+
+  at app\Http\Controllers\ChatController.php:27
+     23▕         if($validated['conversation_id']){
+     24▕             $agent->continue($validated['conversation_id'], );
+     25▕         }else{
+     26▕             $agent->forUser($participant)
+  ➜  27▕         }
+     28▕ 
+     29▕         $agent = new ChatAgent;
+     30▕     $response = $agent->stream($validated['prompt'])->then(function(){
+     31▕         return "hello";
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Composer\Autoload\ClassLoader::loadClass("App\Http\Controllers\ChatController")
+  3   vendor\laravel\framework\src\Illuminate\Routing\RouteAction.php:91
+
