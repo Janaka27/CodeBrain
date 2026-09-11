@@ -1,10 +1,11 @@
 import { Head } from '@inertiajs/react';
 import { useState, useRef, useEffect } from 'react';
-import { Plus, SendHorizontal, Loader2, Bot, User, MessageSquare, MoreVertical, Trash2, ShieldAlert, Zap, Lock, AlertTriangle } from 'lucide-react';
+import { Plus, SendHorizontal, Loader2, Bot, User, MessageSquare, MoreVertical, Trash2, ShieldAlert, Zap, Lock, AlertTriangle, Copy, Check } from 'lucide-react';
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark.css';
+import appLogo from '../../assets/logo.png';
 
 const renderer = new marked.Renderer();
 
@@ -52,6 +53,7 @@ export default function Chat() {
     const [conversations, setConversations] = useState<ConversationItem[]>([]);
     const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
     const [activeMode, setActiveMode] = useState<'chat' | 'failover'>('chat');
+    const [copiedPromptId, setCopiedPromptId] = useState<string | null>(null);
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -309,6 +311,20 @@ export default function Chat() {
         setConversationId(null);
     };
 
+    const handleCopyUserPrompt = (id: string, text: string) => {
+        navigator.clipboard
+            .writeText(text)
+            .then(() => {
+                setCopiedPromptId(id);
+                setTimeout(() => {
+                    setCopiedPromptId(null);
+                }, 2000);
+            })
+            .catch((err) => {
+                console.error('Failed to copy prompt: ', err);
+            });
+    };
+
     const handleCopyClick = (e: React.MouseEvent<HTMLDivElement>) => {
         const target = e.target as HTMLElement;
         const copyBtn = target.closest('.copy-code-btn') as HTMLButtonElement | null;
@@ -361,9 +377,11 @@ export default function Chat() {
                     <div className="space-y-6">
                         {/* Header Branding */}
                         <div className="flex items-center gap-3">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-600 text-white font-bold text-base shadow-md shadow-purple-600/30">
-                                CB
-                            </div>
+                            <img
+                                src={appLogo}
+                                alt="CodeBrain Logo"
+                                className="h-15 w-15 object-contain rounded-xl"
+                            />
                             <div>
                                 <h1 className="font-semibold text-white text-base leading-tight">CodeBrain</h1>
                                 <p className="text-xs text-zinc-400">Powered by Gemini</p>
@@ -529,7 +547,10 @@ export default function Chat() {
                     {/* Footer Info */}
                     <div className="space-y-2">
                         <div className="flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 px-3.5 py-2 text-xs text-zinc-300">
-                            <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
+                            <span className="relative flex h-2 w-2 items-center justify-center">
+                                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+                                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.9)] animate-pulse" />
+                            </span>
                             <span className="font-medium">Gemini 3.6 Flash</span>
                         </div>
                         <p className="px-1 text-[11px] text-zinc-500">Built with Laravel 13 AI SDK</p>
@@ -583,8 +604,11 @@ export default function Chat() {
                         activeMode === 'failover' ? (
                             <div className="flex flex-1 flex-col items-center justify-center p-6 text-center pb-32 overflow-y-auto max-w-4xl mx-auto w-full no-scrollbar">
                                 {/* Centered Failover Badge Icon */}
-                                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-purple-600 text-white font-bold shadow-lg shadow-purple-600/40">
-                                    <ShieldAlert className="h-8 w-8" />
+                                <div className="relative mb-5 flex h-25 w-25 items-center justify-center">
+                                    <img src={appLogo} alt="CodeBrain Logo" className="h-full w-full object-contain" />
+                                    <span className="absolute -bottom-1 -right-1 bg-purple-600 text-white p-1 rounded-lg shadow-md">
+                                        <ShieldAlert className="h-3.5 w-3.5" />
+                                    </span>
                                 </div>
 
                                 {/* Main Title & Description */}
@@ -654,12 +678,12 @@ export default function Chat() {
                         ) : (
                             <div className="flex flex-1 flex-col items-center justify-center p-6 text-center pb-32">
                                 {/* Centered Logo Badge */}
-                                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-purple-600 text-white font-bold text-2xl shadow-lg shadow-purple-600/30">
-                                    CB
+                                <div className="mb-6 flex h-30 w-30 items-center justify-center">
+                                    <img src={appLogo} alt="CodeBrain Logo" className="h-full w-full object-contain" />
                                 </div>
 
                                 {/* Title & Subtitle */}
-                                <h3 className="mb-2 text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                                <h3 className="mb-1 text-2xl sm:text-3xl font-bold text-white tracking-tight">
                                     Welcome to CodeBrain
                                 </h3>
                                 <p className="mb-8 text-sm sm:text-base text-zinc-400 max-w-md">
@@ -697,23 +721,36 @@ export default function Chat() {
                                         </div>
                                     )}
 
-                                    <div
-                                        className={`rounded-2xl px-5 py-3.5 text-sm leading-relaxed ${msg.role === 'user'
-                                            ? 'bg-purple-600 text-white rounded-br-none max-w-[85%] whitespace-pre-wrap'
-                                            : 'bg-zinc-900 border border-zinc-800 text-zinc-200 rounded-bl-none flex-1 max-w-none markdown-body'
-                                            }`}
-                                    >
-                                        {msg.role === 'user' ? (
-                                            msg.content
-                                        ) : msg.content.trim() === '' ? (
-                                            <div className="flex items-center gap-2.5 text-zinc-400 py-0.5">
-                                                <Loader2 className="h-4 w-4 animate-spin text-purple-400" />
-                                                <span className="text-xs font-medium text-zinc-400">Thinking...</span>
+                                    {msg.role === 'user' ? (
+                                        <div className="flex flex-col items-end gap-1 max-w-[85%]">
+                                            <div className="rounded-2xl px-5 py-3.5 text-sm leading-relaxed bg-purple-600 text-white rounded-br-none whitespace-pre-wrap shadow-sm">
+                                                {msg.content}
                                             </div>
-                                        ) : (
-                                            <div dangerouslySetInnerHTML={renderMarkdown(msg.content)} />
-                                        )}
-                                    </div>
+                                            <button
+                                                type="button"
+                                                title={copiedPromptId === msg.id ? 'Copied!' : 'Copy prompt'}
+                                                onClick={() => handleCopyUserPrompt(msg.id, msg.content)}
+                                                className="p-1 text-zinc-400 hover:text-purple-300 transition cursor-pointer rounded-md hover:bg-zinc-800/60 active:scale-95"
+                                            >
+                                                {copiedPromptId === msg.id ? (
+                                                    <Check className="h-3.5 w-3.5 text-emerald-400" />
+                                                ) : (
+                                                    <Copy className="h-3.5 w-3.5 text-zinc-400" />
+                                                )}
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className="rounded-2xl px-5 py-3.5 text-sm leading-relaxed bg-zinc-900 border border-zinc-800 text-zinc-200 rounded-bl-none flex-1 max-w-none markdown-body">
+                                            {msg.content.trim() === '' ? (
+                                                <div className="flex items-center gap-2.5 text-zinc-400 py-0.5">
+                                                    <Loader2 className="h-4 w-4 animate-spin text-purple-400" />
+                                                    <span className="text-xs font-medium text-zinc-400">Thinking...</span>
+                                                </div>
+                                            ) : (
+                                                <div dangerouslySetInnerHTML={renderMarkdown(msg.content)} />
+                                            )}
+                                        </div>
+                                    )}
 
                                     {msg.role === 'user' && (
                                         <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-800 text-zinc-300 font-bold text-sm flex-shrink-0">

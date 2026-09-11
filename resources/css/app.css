@@ -2,6 +2,14 @@
 
 @import 'tw-animate-css';
 
+@theme {
+    --font-sans: 'Poppins', ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+html, body {
+    font-family: 'Poppins', var(--font-sans), sans-serif;
+}
+
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
