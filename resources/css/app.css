@@ -88,10 +88,13 @@ html, body {
         line-height: 1.6;
     }
     & blockquote {
-        border-left: 3px solid #a855f7;
-        padding-left: 1rem;
-        color: #a1a1aa;
-        font-style: italic;
+        border: 1px solid rgba(168, 85, 247, 0.35);
+        border-left: 4px solid #c084fc;
+        background: linear-gradient(to right, rgba(168, 85, 247, 0.12), rgba(24, 24, 27, 0.6));
+        padding: 0.875rem 1.25rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+        color: #f4f4f5;
         margin-top: 1rem;
         margin-bottom: 1rem;
     }

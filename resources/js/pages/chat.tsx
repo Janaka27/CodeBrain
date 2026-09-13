@@ -502,8 +502,61 @@ export default function Chat() {
         processedContent = processedContent.replace(/`[█░\s]+`\s*\*\*[\d%\s\w]+\*\*/gi, '');
         processedContent = processedContent.replace(/`[█░\s]+`/gi, '');
 
+        // Extract and isolate raw "Note on Risk & Security Analysis" block before marked.parse
+        let riskNoteCardHtml = '';
+        const rawNoteRegex = /(?:>\s*)?(?:💡\s*)?(?:\*\*)?\s*Note on Risk[\s\S]*?(?:failover checker|proper risk analysis!)[^\n]*/gi;
+
+        if (rawNoteRegex.test(processedContent)) {
+            processedContent = processedContent.replace(rawNoteRegex, (matchedNoteBlock) => {
+                const cleanNoteMarkdown = matchedNoteBlock.replace(/^(?:>\s*)?(?:💡\s*)?/, '').trim();
+                const parsedNoteContent = marked.parse(cleanNoteMarkdown, { async: false }) as string;
+
+                const highlightedNoteContent = parsedNoteContent.replace(
+                    /(failover checker)/gi,
+                    '<strong class="text-amber-300 font-semibold underline underline-offset-4 decoration-amber-400/50">$1</strong>'
+                );
+
+                riskNoteCardHtml = `
+<div class="my-4 rounded-xl border border-amber-500/60 bg-gradient-to-r from-amber-950/40 via-zinc-900/95 to-amber-950/30 p-4 text-amber-200 shadow-[0_0_20px_rgba(245,158,11,0.35)] backdrop-blur-md transition-all duration-300 hover:shadow-[0_0_28px_rgba(245,158,11,0.5)] hover:border-amber-400/90 ring-1 ring-amber-500/20 not-prose">
+    <div class="flex items-start gap-3">
+        <span class="text-xl flex-shrink-0 animate-pulse select-none">💡</span>
+        <div class="text-xs text-amber-100/90 leading-relaxed m-0 space-y-1">
+            ${highlightedNoteContent}
+        </div>
+    </div>
+</div>
+`;
+                return 'RISKNOTECARDPLACEHOLDER999';
+            });
+        }
+
         const rawHtml = marked.parse(processedContent, { async: false }) as string;
         let enhancedHtml = rawHtml;
+
+        if (riskNoteCardHtml) {
+            enhancedHtml = enhancedHtml.replace(/(?:<p[^>]*>|<em[^>]*>|<strong[^>]*>|\s)*RISKNOTECARDPLACEHOLDER999(?:<\/p>|<\/em>|<\/strong>|\s)*/gi, riskNoteCardHtml);
+        } else {
+            // Fallback for HTML-only content
+            const fallbackRegex = /(?:<blockquote[^>]*>\s*)?<p[^>]*>((?:(?!<\/p>)[\s\S])*?(?:Note on Risk|failover checker)(?:(?!<\/p>)[\s\S])*?)<\/p>(?:\s*<\/blockquote>)?/gi;
+            enhancedHtml = enhancedHtml.replace(fallbackRegex, (_match, innerText: string) => {
+                let cleanText = innerText.replace(/^(\s*<[^>]+>)*\s*💡\s*/gi, '$1');
+                cleanText = cleanText.replace(
+                    /(failover checker)/gi,
+                    '<strong class="text-amber-300 font-semibold underline underline-offset-4 decoration-amber-400/50">$1</strong>'
+                );
+
+                return `
+<div class="my-4 rounded-xl border border-amber-500/60 bg-gradient-to-r from-amber-950/40 via-zinc-900/95 to-amber-950/30 p-4 text-amber-200 shadow-[0_0_20px_rgba(245,158,11,0.35)] backdrop-blur-md transition-all duration-300 hover:shadow-[0_0_28px_rgba(245,158,11,0.5)] hover:border-amber-400/90 ring-1 ring-amber-500/20 not-prose">
+    <div class="flex items-start gap-3">
+        <span class="text-xl flex-shrink-0 animate-pulse select-none">💡</span>
+        <div class="text-xs text-amber-100/90 leading-relaxed m-0">
+            ${cleanText}
+        </div>
+    </div>
+</div>
+`;
+            });
+        }
 
         // Extract Risk Assessment metrics
         const scoreMatch = content.match(/Risk Score:?\s*`?\s*([\d.]+)\s*\/\s*10/i) ||
