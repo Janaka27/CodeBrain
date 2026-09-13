@@ -1,7 +1,10 @@
 <?php
 
 use App\Ai\Agents\ChatAgent;
+use App\Ai\Agents\ReviewAgent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Laravel\Ai\Exceptions\RateLimitedException;
 
 uses(RefreshDatabase::class);
@@ -22,6 +25,18 @@ test('chat agent can be faked and streams response', function () {
 
     $response->assertOk();
     ChatAgent::assertPrompted('Hello');
+});
+
+test('review agent is called when mode is failover', function () {
+    ReviewAgent::fake(['Code audit analysis complete!']);
+
+    $response = $this->postJson('/chat', [
+        'prompt' => 'Check failover risks for this function',
+        'mode' => 'failover',
+    ]);
+
+    $response->assertOk();
+    ReviewAgent::assertPrompted('Check failover risks for this function');
 });
 
 test('chat endpoint continues conversation when conversation_id is provided', function () {
@@ -69,4 +84,72 @@ test('chat endpoint handles RateLimitedException gracefully', function () {
     $content = $response->streamedContent();
 
     expect($content)->toContain('Rate Limit Exceeded');
+});
+
+test('clear chat endpoint deletes conversation, messages, and local attachment files', function () {
+    Storage::fake('local');
+    Storage::disk('local')->put('chats-attachment/to_delete.png', 'image data');
+
+    DB::table('agent_conversations')->insert([
+        'id' => 'conv-123',
+        'title' => 'Test Conversation',
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    DB::table('agent_conversation_messages')->insert([
+        'id' => 'msg-123',
+        'conversation_id' => 'conv-123',
+        'agent' => 'chat',
+        'role' => 'user',
+        'content' => 'Hello',
+        'attachments' => json_encode([
+            [
+                'type' => 'stored-image',
+                'name' => 'to_delete.png',
+                'path' => 'chats-attachment/to_delete.png',
+                'disk' => 'local',
+            ],
+        ]),
+        'tool_calls' => '[]',
+        'tool_results' => '[]',
+        'usage' => '[]',
+        'meta' => '[]',
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    $response = $this->postJson('/clear-chat', [
+        'conversation_id' => 'conv-123',
+    ]);
+
+    $response->assertOk()
+        ->assertJson(['message' => 'Chat cleared successfully']);
+
+    $this->assertDatabaseMissing('agent_conversations', ['id' => 'conv-123']);
+    $this->assertDatabaseMissing('agent_conversation_messages', ['conversation_id' => 'conv-123']);
+    Storage::disk('local')->assertMissing('chats-attachment/to_delete.png');
+});
+
+test('chat endpoint accepts single file attachment', function () {
+    ChatAgent::fake(['Analyzed attachment successfully']);
+
+    $file = UploadedFile::fake()->create('code.txt', 10, 'text/plain');
+
+    $response = $this->postJson('/chat', [
+        'prompt' => 'Review this file',
+        'attachment' => $file,
+    ]);
+
+    $response->assertOk();
+    ChatAgent::assertPrompted('Review this file');
+});
+
+test('attachment preview file can be retrieved via route', function () {
+    Storage::fake('local');
+    Storage::disk('local')->put('chats-attachment/sample.png', 'fake image content');
+
+    $response = $this->get('/chats-attachment/sample.png');
+
+    $response->assertOk();
 });

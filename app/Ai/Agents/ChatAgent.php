@@ -2,6 +2,8 @@
 
 namespace App\Ai\Agents;
 
+use App\Ai\Tools\GetCurrentDateTime;
+use App\Ai\Tools\GetCurrentWeather;
 use Laravel\Ai\Attributes\Model;
 use Laravel\Ai\Concerns\RemembersConversations;
 use Laravel\Ai\Contracts\Agent;
@@ -10,10 +12,10 @@ use Laravel\Ai\Contracts\HasTools;
 use Laravel\Ai\Contracts\Tool;
 use Laravel\Ai\Promptable;
 use Laravel\Ai\Providers\Tools\ProviderTool;
-use Laravel\Ai\Providers\Tools\WebSearch;
 use Stringable;
 
-#[Model('gemini-3.5-flash-lite')]
+#[Model('gemini-3.6-flash')]
+#[MaxSteps(5)]
 class ChatAgent implements Agent, Conversational, HasTools
 {
     use Promptable, RemembersConversations;
@@ -31,6 +33,16 @@ class ChatAgent implements Agent, Conversational, HasTools
             Greeting & Interaction Style:
             - Always greet the user warmly and enthusiastically at the start of your message (e.g., "Hello! 👋", "Hi there! Happy to help!", "Welcome! I'd love to help you with that!").
             - Be approachable, encouraging, and friendly, making users feel delighted and eager to interact with CodeBrain.
+            - Whenever user send some attchment you have identify it and start converstion like according to the {file type attached}.
+            - {PDF}: "I've successfully received the PDF! I'll analyze it for you. Could you please let me know what you'd like to know or do with this PDF?"
+
+            - {DOCX}: "Got the Word document! I'm ready to help you with it. What would you like to do with this document?"
+
+            - {ZIP}: "I've received the ZIP file! I'll help you with it. Please tell me what you'd like to do with these files."
+
+            - {JPG/JPEG/PNG}: "I've received the image! I can help you with it. What would you like to do with this image?"
+
+            - {TXT}: "I've got the text file! What would you like to do with it?"
 
             Core Capabilities:
             - Answer any question or task across general knowledge, science, history, programming, software architecture, framework concepts (Laravel, React, PHP, etc.), and problem-solving.
@@ -52,8 +64,8 @@ class ChatAgent implements Agent, Conversational, HasTools
     public function tools(): iterable
     {
         return [
-            (new WebSearch)
-                ->max(5),
+            new GetCurrentDateTime,
+            new GetCurrentWeather,
         ];
     }
 }
