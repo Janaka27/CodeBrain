@@ -5,6 +5,7 @@ use App\Ai\Agents\ReviewAgent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Ai\Exceptions\RateLimitedException;
 
 uses(RefreshDatabase::class);

@@ -9,26 +9,26 @@ Each item gives the fork, then a hint (a grep or dir to spot which side the app 
 ## A. Validation & HTTP input
 
 1. Validation entry point: inline `$request->validate()` vs Form Request classes vs `Validator::make()`.
-   - Hint: `ls app/Http/Requests`; grep `->validate(` / `Validator::make(` in `app/Http/Controllers`.
+    - Hint: `ls app/Http/Requests`; grep `->validate(` / `Validator::make(` in `app/Http/Controllers`.
 2. Custom rule location: invokable rule objects in `app/Rules` vs inline closures vs `Validator::extend()` in a provider. Rule objects are the default `make:rule` path, so record only if the app leans on closures or `Validator::extend` instead. "No rule objects" alone is just no-signal.
-   - Hint: `ls app/Rules`; grep `Validator::extend` in `app/Providers`.
+    - Hint: `ls app/Rules`; grep `Validator::extend` in `app/Providers`.
 3. Typed input retrieval: typed getters (`$request->string()`, `->integer()`, `->enum()`, `->date()`) vs raw `$request->input()` / dynamic properties.
-   - Hint: grep `->string(` / `->integer(` / `->enum(` vs `->input(` in `app/Http`.
+    - Hint: grep `->string(` / `->integer(` / `->enum(` vs `->input(` in `app/Http`.
 4. Custom messages/attributes: `lang/*/validation.php` vs Form Request `messages()` / `attributes()` methods.
-   - Hint: `ls lang`; grep `function messages`, `function attributes` in `app/Http/Requests`.
+    - Hint: `ls lang`; grep `function messages`, `function attributes` in `app/Http/Requests`.
 
 ## B. Controllers & routing
 
 5. Controller shape: invokable single-action (`__invoke`) vs resource controllers vs plain multi-method.
-   - Hint: grep `__invoke` in controllers; `Route::resource` / `apiResource` vs verb routes.
+    - Hint: grep `__invoke` in controllers; `Route::resource` / `apiResource` vs verb routes.
 6. Business-logic location (architecture): fat controllers vs delegated to Actions / Services / Jobs.
-   - Hint: read a few controller methods; `ls app/Actions app/Services`.
+    - Hint: read a few controller methods; `ls app/Actions app/Services`.
 7. Route handler style: closures in `routes/*.php` vs controller classes.
-   - Hint: count `function ()` vs `::class` in `routes/web.php`, `routes/api.php`.
+    - Hint: count `function ()` vs `::class` in `routes/web.php`, `routes/api.php`.
 8. Middleware assignment: route/group `->middleware()` vs controller `HasMiddleware::middleware()` vs `#[Middleware]` attribute.
-   - Hint: grep `implements HasMiddleware`, `#[Middleware(` in controllers vs `->middleware(` in routes.
+    - Hint: grep `implements HasMiddleware`, `#[Middleware(` in controllers vs `->middleware(` in routes.
 9. Route model binding: implicit (type-hinted models) vs explicit `Route::bind` vs manual `findOrFail`.
-   - Hint: typed model params in signatures vs `findOrFail(` in controllers; grep `Route::bind`.
+    - Hint: typed model params in signatures vs `findOrFail(` in controllers; grep `Route::bind`.
 10. Rate limiting: named `RateLimiter::for()` + `throttle:name` vs inline `throttle:60,1`.
     - Hint: grep `RateLimiter::for` in providers vs `throttle:` in route files.
 
@@ -83,7 +83,7 @@ This app ships a frontend stack, so the items below apply.
     - Hint: `composer.json` + `package.json`; `ls resources/js/pages`, `resources/views`.
 29. Blade composition: class `<x-*>` components vs anonymous components (`@props`) vs `@include` partials.
     - Hint: `ls app/View/Components`; grep `<x-`, `@include` in `resources/views`.
-32. Localization: short keys (`lang/*/*.php` + `__('messages.welcome')`) vs JSON string keys (`lang/*.json` + `__('Full sentence')`).
+30. Localization: short keys (`lang/*/*.php` + `__('messages.welcome')`) vs JSON string keys (`lang/*.json` + `__('Full sentence')`).
     - Hint: `ls lang`; grep dotted `__('` vs sentence keys.
 
 ## G. Database & migrations

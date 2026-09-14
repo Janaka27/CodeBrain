@@ -4,38 +4,38 @@
 
 Prefer Laravel's conventions in new code, but preserve an established project convention unless a coordinated rename is worthwhile.
 
-| Element | Convention | Example |
-| --- | --- | --- |
-| Controller | Singular resource name | `ArticleController` |
-| Model | Singular StudlyCase | `User` |
-| Table | Plural snake_case | `article_comments` |
-| Pivot table | Singular model names in alphabetical order, in snake_case | `article_user` |
-| Column | snake_case | `meta_title` |
-| Conventional foreign key | Singular model name plus `_id`, in snake_case | `article_id` |
-| Resource URI | Plural resource | `articles/1` |
-| Route name | Dotted segments; snake_case within a segment when needed | `users.show_active` |
-| Method | camelCase | `getAll` |
-| Variable | camelCase | `$articlesWithAuthor` |
-| Collection | Descriptive and plural | `$activeUsers` |
-| Object | Descriptive and singular | `$activeUser` |
-| View | kebab-case | `show-filtered.blade.php` |
-| Configuration file | snake_case | `google_calendar.php` |
-| Enumeration | Singular StudlyCase | `UserType` |
+| Element                  | Convention                                                | Example                   |
+| ------------------------ | --------------------------------------------------------- | ------------------------- |
+| Controller               | Singular resource name                                    | `ArticleController`       |
+| Model                    | Singular StudlyCase                                       | `User`                    |
+| Table                    | Plural snake_case                                         | `article_comments`        |
+| Pivot table              | Singular model names in alphabetical order, in snake_case | `article_user`            |
+| Column                   | snake_case                                                | `meta_title`              |
+| Conventional foreign key | Singular model name plus `_id`, in snake_case             | `article_id`              |
+| Resource URI             | Plural resource                                           | `articles/1`              |
+| Route name               | Dotted segments; snake_case within a segment when needed  | `users.show_active`       |
+| Method                   | camelCase                                                 | `getAll`                  |
+| Variable                 | camelCase                                                 | `$articlesWithAuthor`     |
+| Collection               | Descriptive and plural                                    | `$activeUsers`            |
+| Object                   | Descriptive and singular                                  | `$activeUser`             |
+| View                     | kebab-case                                                | `show-filtered.blade.php` |
+| Configuration file       | snake_case                                                | `google_calendar.php`     |
+| Enumeration              | Singular StudlyCase                                       | `UserType`                |
 
 ## Prefer Clear, Idiomatic Syntax
 
 Use Laravel helpers and query methods when they communicate intent more directly. Do not shorten code when the result is ambiguous or loses useful type information.
 
-| More verbose | Idiomatic alternative |
-| --- | --- |
-| `Session::get('cart')` | `session('cart')` |
-| `$request->session()->get('cart')` | `session('cart')` |
-| `return Redirect::back()` | `return back()` |
-| `Carbon::now()` | `now()` |
-| `->where('column', '=', 1)` | `->where('column', 1)` |
-| `->orderBy('created_at', 'desc')` | `->latest()` |
-| `->orderBy('created_at', 'asc')` | `->oldest()` |
-| `->first()?->name` | `->value('name')` when only that value is needed |
+| More verbose                       | Idiomatic alternative                            |
+| ---------------------------------- | ------------------------------------------------ |
+| `Session::get('cart')`             | `session('cart')`                                |
+| `$request->session()->get('cart')` | `session('cart')`                                |
+| `return Redirect::back()`          | `return back()`                                  |
+| `Carbon::now()`                    | `now()`                                          |
+| `->where('column', '=', 1)`        | `->where('column', 1)`                           |
+| `->orderBy('created_at', 'desc')`  | `->latest()`                                     |
+| `->orderBy('created_at', 'asc')`   | `->oldest()`                                     |
+| `->first()?->name`                 | `->value('name')` when only that value is needed |
 
 Use typed request accessors such as `$request->string()`, `$request->integer()`, and `$request->boolean()` when their coercion matches the operation.
 

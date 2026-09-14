@@ -1,9 +1,9 @@
 ---
 name: testing-best-practices
-description: "Laravel test design and review. Use when selecting coverage, naming or structuring tests, choosing assertions or test data, isolating dependencies, testing HTTP or security boundaries, improving suite performance, or reviewing test value. Use framework guidance or search-docs for Pest and PHPUnit syntax."
+description: 'Laravel test design and review. Use when selecting coverage, naming or structuring tests, choosing assertions or test data, isolating dependencies, testing HTTP or security boundaries, improving suite performance, or reviewing test value. Use framework guidance or search-docs for Pest and PHPUnit syntax.'
 license: MIT
 metadata:
-  author: laravel
+    author: laravel
 ---
 
 # Testing Best Practices
@@ -45,14 +45,14 @@ Read this section before you write a test.
 
 Most changes need more than one rule file.
 
-| Subject | Rule File |
-| --- | --- |
-| Test framework features that may already do the work | [`rules/finding-features.md`](rules/finding-features.md) |
-| File layout, test names, and groups | [`rules/naming.md`](rules/naming.md) |
-| Arrange-act-assert and choosing the correct assertion | [`rules/assertions.md`](rules/assertions.md) |
-| Endpoint coverage, authentication, authorization, tenant isolation, validation, and browser tests | [`rules/endpoint-tests.md`](rules/endpoint-tests.md) |
-| Factories, test data ownership, and repeated input values | [`rules/test-data.md`](rules/test-data.md) |
-| Fakes, mocks, outbound HTTP, time, randomness, and databases | [`rules/isolation.md`](rules/isolation.md) |
-| Escaping, injection, cross-tenant access, and privilege checks | [`rules/security.md`](rules/security.md) |
-| Environment and CI settings for a slow suite | [`rules/performance.md`](rules/performance.md) |
-| Reviewing a test or suite | [`rules/review.md`](rules/review.md) |
+| Subject                                                                                           | Rule File                                                |
+| ------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| Test framework features that may already do the work                                              | [`rules/finding-features.md`](rules/finding-features.md) |
+| File layout, test names, and groups                                                               | [`rules/naming.md`](rules/naming.md)                     |
+| Arrange-act-assert and choosing the correct assertion                                             | [`rules/assertions.md`](rules/assertions.md)             |
+| Endpoint coverage, authentication, authorization, tenant isolation, validation, and browser tests | [`rules/endpoint-tests.md`](rules/endpoint-tests.md)     |
+| Factories, test data ownership, and repeated input values                                         | [`rules/test-data.md`](rules/test-data.md)               |
+| Fakes, mocks, outbound HTTP, time, randomness, and databases                                      | [`rules/isolation.md`](rules/isolation.md)               |
+| Escaping, injection, cross-tenant access, and privilege checks                                    | [`rules/security.md`](rules/security.md)                 |
+| Environment and CI settings for a slow suite                                                      | [`rules/performance.md`](rules/performance.md)           |
+| Reviewing a test or suite                                                                         | [`rules/review.md`](rules/review.md)                     |

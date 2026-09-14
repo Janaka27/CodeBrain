@@ -17,12 +17,12 @@ First identify the subject of the check, then find an assertion designed for it.
 
 Use the assertion in this table for each subject.
 
-| Subject | Assertion to use |
-| --- | --- |
-| A return value, the state of an object, or a transformation of a value | an `expect()` chain |
-| An HTTP status, JSON, a session, or Inertia | a Laravel response assertion |
-| The state in the database | a Laravel database assertion |
-| The existence of a model | `assertModelExists($model)` rather than `assertDatabaseHas('users', ['id' => $user->id])` |
+| Subject                                                                | Assertion to use                                                                          |
+| ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| A return value, the state of an object, or a transformation of a value | an `expect()` chain                                                                       |
+| An HTTP status, JSON, a session, or Inertia                            | a Laravel response assertion                                                              |
+| The state in the database                                              | a Laravel database assertion                                                              |
+| The existence of a model                                               | `assertModelExists($model)` rather than `assertDatabaseHas('users', ['id' => $user->id])` |
 
 Use a PHPUnit assertion only if no Pest expectation and no Laravel assertion exists for the subject.
 

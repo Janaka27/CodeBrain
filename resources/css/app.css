@@ -6,7 +6,8 @@
     --font-sans: 'Poppins', ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
-html, body {
+html,
+body {
     font-family: 'Poppins', var(--font-sans), sans-serif;
 }
 
@@ -33,17 +34,28 @@ html, body {
     & p:last-child {
         margin-bottom: 0;
     }
-    & h1, & h2, & h3, & h4 {
+    & h1,
+    & h2,
+    & h3,
+    & h4 {
         color: #ffffff;
         font-weight: 700;
         margin-top: 1.75rem;
         margin-bottom: 0.75rem;
         line-height: 1.35;
     }
-    & h1 { font-size: 1.5rem; }
-    & h2 { font-size: 1.25rem; }
-    & h3 { font-size: 1.1rem; }
-    & h4 { font-size: 1rem; }
+    & h1 {
+        font-size: 1.5rem;
+    }
+    & h2 {
+        font-size: 1.25rem;
+    }
+    & h3 {
+        font-size: 1.1rem;
+    }
+    & h4 {
+        font-size: 1rem;
+    }
     & ul {
         list-style-type: disc;
         padding-left: 1.5rem;
@@ -90,7 +102,11 @@ html, body {
     & blockquote {
         border: 1px solid rgba(168, 85, 247, 0.35);
         border-left: 4px solid #c084fc;
-        background: linear-gradient(to right, rgba(168, 85, 247, 0.12), rgba(24, 24, 27, 0.6));
+        background: linear-gradient(
+            to right,
+            rgba(168, 85, 247, 0.12),
+            rgba(24, 24, 27, 0.6)
+        );
         padding: 0.875rem 1.25rem;
         border-radius: 0.75rem;
         box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
@@ -104,7 +120,8 @@ html, body {
         margin-top: 1rem;
         margin-bottom: 1rem;
     }
-    & th, & td {
+    & th,
+    & td {
         border: 1px solid #27272a;
         padding: 0.625rem 0.875rem;
         text-align: left;

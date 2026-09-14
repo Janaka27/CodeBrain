@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Ai\Agents\ChatAgent;
 use App\Ai\Agents\ReviewAgent;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -13,6 +14,7 @@ use Laravel\Ai\Files\StoredAudio;
 use Laravel\Ai\Files\StoredDocument;
 use Laravel\Ai\Files\StoredImage;
 use Laravel\Ai\Files\StoredVideo;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ChatController extends Controller
@@ -26,7 +28,7 @@ class ChatController extends Controller
             'mode' => ['nullable', 'string', 'in:chat,failover'],
         ]);
 
-        $participant = (object) ['id' => $request->user()?->id ?? 1];
+        $participant = (object) ['id' => $request->user()->id ?? 1];
 
         $attachments = [];
 
@@ -140,7 +142,7 @@ class ChatController extends Controller
         ]);
     }
 
-    public function loadChat(Request $request)
+    public function loadChat(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'conversation_id' => ['nullable', 'string'],
@@ -200,13 +202,19 @@ class ChatController extends Controller
         return response()->json($conversations);
     }
 
-    public function getAttachment(string $path)
+    public function getAttachment(string $path): Response
     {
         $cleanPath = ltrim($path, '/');
 
+        if (Storage::disk('local')->exists('chats-attachment/'.$cleanPath)) {
+            return Storage::disk('local')->response('chats-attachment/'.$cleanPath);
+        }
+
+        if (Storage::disk('local')->exists($cleanPath)) {
+            return Storage::disk('local')->response($cleanPath);
+        }
+
         $candidates = [
-            Storage::disk('local')->path('chats-attachment/'.$cleanPath),
-            Storage::disk('local')->path($cleanPath),
             storage_path('app/'.$cleanPath),
             storage_path('app/chats-attachment/'.$cleanPath),
             storage_path('app/private/chats-attachment/'.$cleanPath),
@@ -226,7 +234,7 @@ class ChatController extends Controller
         abort(404);
     }
 
-    public function clearChat(Request $request)
+    public function clearChat(Request $request): JsonResponse
     {
         try {
             $validated = $request->validate([

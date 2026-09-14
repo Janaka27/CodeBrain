@@ -3,7 +3,7 @@ name: ai-sdk-development
 description: TRIGGER when working with ai-sdk, Laravel's official first-party AI SDK. Activate when building or editing AI agents, chatbots, text generation, image generation, audio/TTS, transcription/STT, embeddings, RAG, vector stores, reranking, structured output, streaming, conversation memory, tools, MCP servers, queueing, broadcasting, and provider failover across OpenAI, Anthropic, Gemini, Azure, Groq, xAI, DeepSeek, Mistral, Ollama, ElevenLabs, Cohere, Jina, and VoyageAI. Invoke when the user references ai-sdk, the `Laravel\Ai\` namespace, or this project's AI features — not for other AI packages used directly.
 license: MIT
 metadata:
-  author: laravel
+    author: laravel
 ---
 
 # Developing with the Laravel AI SDK
@@ -508,15 +508,15 @@ Calling a capability not supported by a provider throws a `LogicException`. Refe
 
 ## Provider Support
 
-| Feature    | Providers                                                       |
-| ---------- | --------------------------------------------------------------- |
+| Feature    | Providers                                                                                             |
+| ---------- | ----------------------------------------------------------------------------------------------------- |
 | Text       | OpenAI, Anthropic, Gemini, Azure, Groq, xAI, DeepSeek, Mistral, Ollama, OpenRouter, OpenAI-compatible |
-| Images     | OpenAI, Gemini, xAI                                            |
-| TTS        | OpenAI, ElevenLabs, Mistral                                     |
-| STT        | OpenAI, ElevenLabs, Mistral, Groq, OpenAI-compatible            |
-| Embeddings | OpenAI, OpenAI-compatible, Gemini, Azure, Cohere, Mistral, Jina, VoyageAI |
-| Reranking  | Cohere, Jina                                                    |
-| Files      | OpenAI, Anthropic, Gemini                                       |
+| Images     | OpenAI, Gemini, xAI                                                                                   |
+| TTS        | OpenAI, ElevenLabs, Mistral                                                                           |
+| STT        | OpenAI, ElevenLabs, Mistral, Groq, OpenAI-compatible                                                  |
+| Embeddings | OpenAI, OpenAI-compatible, Gemini, Azure, Cohere, Mistral, Jina, VoyageAI                             |
+| Reranking  | Cohere, Jina                                                                                          |
+| Files      | OpenAI, Anthropic, Gemini                                                                             |
 
 Use the `Laravel\Ai\Enums\Lab` enum to reference providers in code instead of plain strings:
 

@@ -8,19 +8,19 @@ Pest adds features faster than this skill can list them. Find an existing featur
 
 Search for a feature in this table before you write the code by hand.
 
-| Work that you need | Term to search for |
-| --- | --- |
-| Run one test with many input values | datasets, bound datasets |
-| Assert over many values or over a collection | higher-order expectations |
-| Remove the same setup from each test in a file | hooks, higher-order tests |
-| Apply a convention to the complete codebase | architecture testing |
-| Measure if the suite finds a defect | mutation testing |
-| Find code with no types | type coverage |
-| Reduce the time of a slow suite | parallel, profiling |
-| Split the suite across CI jobs | sharding, `--update-shards` |
-| Run only the tests that a change affects | Test Impact Analysis, `--tia` |
-| Assert that a value has a known format | validation expectations |
-| Run one test while you debug | filtering, `--bail`, `--dirty` |
+| Work that you need                             | Term to search for             |
+| ---------------------------------------------- | ------------------------------ |
+| Run one test with many input values            | datasets, bound datasets       |
+| Assert over many values or over a collection   | higher-order expectations      |
+| Remove the same setup from each test in a file | hooks, higher-order tests      |
+| Apply a convention to the complete codebase    | architecture testing           |
+| Measure if the suite finds a defect            | mutation testing               |
+| Find code with no types                        | type coverage                  |
+| Reduce the time of a slow suite                | parallel, profiling            |
+| Split the suite across CI jobs                 | sharding, `--update-shards`    |
+| Run only the tests that a change affects       | Test Impact Analysis, `--tia`  |
+| Assert that a value has a known format         | validation expectations        |
+| Run one test while you debug                   | filtering, `--bail`, `--dirty` |
 
 ## Built-in Laravel Assertion Methods
 
