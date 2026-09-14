@@ -99,6 +99,31 @@ export default function Chat() {
     const [selectedImageModal, setSelectedImageModal] = useState<string | null>(
         null,
     );
+    const [isInitialLoading, setIsInitialLoading] = useState(true);
+    const [isFadingOut, setIsFadingOut] = useState(false);
+    const [loadingProgress, setLoadingProgress] = useState(15);
+
+    useEffect(() => {
+        const step1 = setTimeout(() => setLoadingProgress(50), 120);
+        const step2 = setTimeout(() => setLoadingProgress(85), 320);
+        const step3 = setTimeout(() => setLoadingProgress(100), 550);
+
+        const fadeTimer = setTimeout(() => {
+            setIsFadingOut(true);
+        }, 750);
+
+        const removeTimer = setTimeout(() => {
+            setIsInitialLoading(false);
+        }, 1050);
+
+        return () => {
+            clearTimeout(step1);
+            clearTimeout(step2);
+            clearTimeout(step3);
+            clearTimeout(fadeTimer);
+            clearTimeout(removeTimer);
+        };
+    }, []);
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -810,6 +835,56 @@ export default function Chat() {
     return (
         <>
             <Head title="CodeBrain - AI Code Reviewer" />
+
+            {/* Sleek Loading Screen Overlay with Progress Bar */}
+            {isInitialLoading && (
+                <div
+                    className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#09090b] text-white transition-opacity duration-300 ease-out ${
+                        isFadingOut
+                            ? 'pointer-events-none opacity-0'
+                            : 'opacity-100'
+                    }`}
+                >
+                    {/* Soft Radial Ambient Glow */}
+                    <div className="pointer-events-none absolute h-64 w-64 rounded-full bg-purple-600/10 blur-[90px]" />
+
+                    <div className="relative flex flex-col items-center gap-4 px-4 text-center">
+                        {/* Logo Container with Pulsing Glow */}
+                        <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-zinc-900/80 p-3 shadow-xl backdrop-blur-md">
+                            <img
+                                src={appLogo}
+                                alt="CodeBrain Logo"
+                                className="h-full w-full animate-pulse object-contain drop-shadow-[0_0_10px_rgba(168,85,247,0.5)] filter"
+                            />
+                        </div>
+
+                        {/* App Branding */}
+                        <div>
+                            <h1 className="text-2xl font-bold tracking-tight text-white">
+                                CodeBrain
+                            </h1>
+                            <p className="mt-0.5 text-xs font-medium text-zinc-400">
+                                AI Code Reviewer
+                            </p>
+                        </div>
+
+                        {/* Progress Bar & Percentage Ticker */}
+                        <div className="mt-2 flex w-56 flex-col items-center gap-2">
+                            <div className="h-1.5 w-full overflow-hidden rounded-full border border-white/5 bg-zinc-900 shadow-inner">
+                                <div
+                                    className="h-full rounded-full bg-gradient-to-r from-purple-500 via-indigo-500 to-cyan-400 shadow-[0_0_10px_rgba(168,85,247,0.5)] transition-all duration-300 ease-out"
+                                    style={{ width: `${loadingProgress}%` }}
+                                />
+                            </div>
+
+                            <span className="font-mono text-[11px] font-medium text-purple-300/80">
+                                {loadingProgress}%
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="flex h-screen w-screen overflow-hidden bg-[#09090b] font-sans text-zinc-100 antialiased">
                 {/* Left Sidebar */}
                 <aside className="z-20 flex w-64 flex-shrink-0 flex-col justify-between border-r border-zinc-800/80 bg-[#121217] p-4">
@@ -1218,7 +1293,7 @@ export default function Chat() {
                                             onClick={() =>
                                                 setInputMessage(suggestion)
                                             }
-                                            className="cursor-pointer rounded-full border border-zinc-800 bg-zinc-900/60 px-4 py-2.5 text-xs font-medium text-zinc-300 transition hover:border-zinc-700 hover:bg-zinc-800/80 hover:text-white sm:text-sm"
+                                            className="font-sm cursor-pointer rounded-full border border-zinc-800 bg-zinc-900/60 px-4 py-2.5 text-xs text-zinc-300 transition hover:border-zinc-700 hover:bg-zinc-800/80 hover:text-white sm:text-sm"
                                         >
                                             {suggestion}
                                         </button>
