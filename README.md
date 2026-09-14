@@ -9,6 +9,7 @@ CodeBrain combines **Laravel 13, Laravel AI SDK, React, Inertia.js, and Google G
 ---
 
 Repository URL => https://github.com/Janaka27/CodeBrain.git
+Demo Video URL => https://drive.google.com/file/d/1Y1HiT9WUSNEEGpbuEg8VHYQ8O270z00h/view?usp=sharing
 
 ---
 
