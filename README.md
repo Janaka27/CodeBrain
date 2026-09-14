@@ -7,8 +7,8 @@ The project was built primarily to **explore the real power and capabilities of 
 CodeBrain combines **Laravel 13, Laravel AI SDK, React, Inertia.js, and Google Gemini** to provide an interactive AI development experience.
 
 ---
-Repository URL => https://github.com/Janaka27/CodeBrain.git
 
+Repository URL => https://github.com/Janaka27/CodeBrain.git
 
 ---
 
@@ -18,33 +18,33 @@ Repository URL => https://github.com/Janaka27/CodeBrain.git
 
 Analyze source code and receive AI-powered feedback about:
 
-* Logical errors
-* Potential bugs
-* Code quality
-* Performance problems
-* Architecture improvements
-* Best-practice recommendations
+- Logical errors
+- Potential bugs
+- Code quality
+- Performance problems
+- Architecture improvements
+- Best-practice recommendations
 
 ### 🛡️ Security & Vulnerability Auditing
 
 CodeBrain can analyze code for common security vulnerabilities, including:
 
-* SQL Injection
-* Cross-Site Scripting (XSS)
-* Authentication issues
-* Authorization problems
-* Unsafe input handling
-* Other potential security weaknesses
+- SQL Injection
+- Cross-Site Scripting (XSS)
+- Authentication issues
+- Authorization problems
+- Unsafe input handling
+- Other potential security weaknesses
 
 ### ⚡ Performance & Reliability Analysis
 
 The reviewer can identify potential:
 
-* Performance bottlenecks
-* High-concurrency issues
-* Memory-related problems
-* Uncaught exceptions
-* Reliability and resilience issues
+- Performance bottlenecks
+- High-concurrency issues
+- Memory-related problems
+- Uncaught exceptions
+- Reliability and resilience issues
 
 ### 📂 Multimodal File Analysis
 
@@ -64,8 +64,8 @@ CodeBrain uses the Laravel AI SDK's agent capabilities to create AI-powered work
 
 Custom tools allow the AI to access additional information when required, such as:
 
-* Current date and time
-* Current weather information
+- Current date and time
+- Current weather information
 
 ### 💬 Conversational AI Memory
 
@@ -75,15 +75,15 @@ The application maintains conversation history so users can continue previous di
 
 The interface includes:
 
-* Syntax-highlighted code blocks
-* One-click code copying
-* Markdown rendering
-* File previews
-* Image lightbox previews
-* Streaming responses
-* Chat history
-* Undoable chat deletion
-* Modern developer-focused UI
+- Syntax-highlighted code blocks
+- One-click code copying
+- Markdown rendering
+- File previews
+- Image lightbox previews
+- Streaming responses
+- Chat history
+- Undoable chat deletion
+- Modern developer-focused UI
 
 ---
 
@@ -91,24 +91,24 @@ The interface includes:
 
 ### Backend
 
-* ⚙️ **Laravel 13**
-* 🤖 **Laravel AI SDK**
-* ✨ **Google Gemini**
+- ⚙️ **Laravel 13**
+- 🤖 **Laravel AI SDK**
+- ✨ **Google Gemini**
 
 ### Frontend
 
-* ⚛️ **React**
-* 🔗 **Inertia.js**
+- ⚛️ **React**
+- 🔗 **Inertia.js**
 
 ### AI & Developer Technologies
 
-* 🧠 AI Agents
-* 🧩 AI Tool Calling
-* 📡 Server-Sent Events (SSE)
-* 🔍 AI Code Analysis
-* 🛡️ Security/Vulnerability Analysis
-* 📂 Multimodal File Processing
-* 💬 Conversational AI Memory
+- 🧠 AI Agents
+- 🧩 AI Tool Calling
+- 📡 Server-Sent Events (SSE)
+- 🔍 AI Code Analysis
+- 🛡️ Security/Vulnerability Analysis
+- 📂 Multimodal File Processing
+- 💬 Conversational AI Memory
 
 ---
 
@@ -152,14 +152,14 @@ A major purpose of CodeBrain was to explore the capabilities of the **Laravel AI
 
 The project demonstrates how Laravel AI can be used for:
 
-* AI agent creation
-* Conversational AI
-* AI tool calling
-* Multimodal inputs
-* Conversation persistence
-* Streaming AI responses
-* Model configuration
-* AI-powered application workflows
+- AI agent creation
+- Conversational AI
+- AI tool calling
+- Multimodal inputs
+- Conversation persistence
+- Streaming AI responses
+- Model configuration
+- AI-powered application workflows
 
 Rather than treating the LLM as a simple API endpoint, CodeBrain uses the AI SDK to build a more structured **AI agent-based application**.
 
@@ -267,21 +267,21 @@ CodeBrain separates AI responsibilities into specialized agents.
 
 Used for:
 
-* General developer assistance
-* Technical questions
-* Conversational interactions
-* Project-related discussions
-* Multimodal AI interactions
+- General developer assistance
+- Technical questions
+- Conversational interactions
+- Project-related discussions
+- Multimodal AI interactions
 
 ### Review Agent
 
 Used for:
 
-* Code review
-* Bug detection
-* Security analysis
-* Performance analysis
-* Architecture recommendations
+- Code review
+- Bug detection
+- Security analysis
+- Performance analysis
+- Architecture recommendations
 
 This separation allows different AI workflows to have different instructions and responsibilities.
 
@@ -311,15 +311,15 @@ Users can provide files as additional context for AI analysis.
 
 Supported file categories include:
 
-* 📄 PDF
-* 📝 Word documents
-* 📊 Excel files
-* 💻 Source code
-* 🖼️ Images
-* 📦 ZIP files
-* 📃 Text files
-* 🎵 Audio
-* 🎥 Video
+- 📄 PDF
+- 📝 Word documents
+- 📊 Excel files
+- 💻 Source code
+- 🖼️ Images
+- 📦 ZIP files
+- 📃 Text files
+- 🎵 Audio
+- 🎥 Video
 
 The application determines the appropriate file type and passes it to the AI workflow for processing.
 
@@ -331,12 +331,12 @@ The application determines the appropriate file type and passes it to the AI wor
 
 Before running CodeBrain, make sure you have the following installed:
 
-* PHP 8.4+
-* Composer
-* Node.js
-* npm
-* A supported database
-* Google Gemini API key
+- PHP 8.4+
+- Composer
+- Node.js
+- npm
+- A supported database
+- Google Gemini API key
 
 ---
 
@@ -444,7 +444,6 @@ composer run dev
 
 ---
 
-
 The application should now be available through your local Laravel development server.
 
 ---
@@ -518,16 +517,16 @@ CodeBrain/
 
 The main goals of CodeBrain were to:
 
-* Explore the capabilities of the Laravel AI SDK
-* Understand AI agent architecture
-* Integrate Google Gemini into Laravel
-* Implement AI tool calling
-* Build real-time AI streaming
-* Implement conversational AI memory
-* Explore multimodal AI processing
-* Build an AI-powered security reviewer
-* Combine Laravel with React and Inertia.js
-* Create a practical AI-powered developer tool
+- Explore the capabilities of the Laravel AI SDK
+- Understand AI agent architecture
+- Integrate Google Gemini into Laravel
+- Implement AI tool calling
+- Build real-time AI streaming
+- Implement conversational AI memory
+- Explore multimodal AI processing
+- Build an AI-powered security reviewer
+- Combine Laravel with React and Inertia.js
+- Create a practical AI-powered developer tool
 
 ---
 
@@ -535,16 +534,16 @@ The main goals of CodeBrain were to:
 
 Building CodeBrain provided hands-on experience with several areas of modern AI application development:
 
-* 🤖 Large Language Model integration
-* 🧠 AI agent architecture
-* 🧩 Function/tool calling
-* 📡 Server-Sent Events
-* 💬 Conversational AI
-* 📂 Multimodal AI
-* 🛡️ AI-assisted security analysis
-* ⚡ Real-time frontend updates
-* 🔗 Laravel + React integration
-* 🏗️ AI application architecture
+- 🤖 Large Language Model integration
+- 🧠 AI agent architecture
+- 🧩 Function/tool calling
+- 📡 Server-Sent Events
+- 💬 Conversational AI
+- 📂 Multimodal AI
+- 🛡️ AI-assisted security analysis
+- ⚡ Real-time frontend updates
+- 🔗 Laravel + React integration
+- 🏗️ AI application architecture
 
 Most importantly, the project helped me understand how the **Laravel AI SDK can be used to build structured AI applications instead of simply sending prompts to an LLM API.**
 
@@ -564,16 +563,16 @@ Do not upload confidential source code, credentials, API keys, passwords, or oth
 
 Some potential future improvements include:
 
-* 🔐 More advanced security vulnerability detection
-* 📊 Code quality scoring
-* 🧪 Automated test generation
-* 🐛 AI-assisted debugging
-* 🔄 GitHub repository integration
-* 📈 Project-level code analysis
-* 🗂️ Repository-wide context
-* 🔎 Static analysis integration
-* 🤖 More specialized AI agents
-* 📋 Exportable code review reports
+- 🔐 More advanced security vulnerability detection
+- 📊 Code quality scoring
+- 🧪 Automated test generation
+- 🐛 AI-assisted debugging
+- 🔄 GitHub repository integration
+- 📈 Project-level code analysis
+- 🗂️ Repository-wide context
+- 🔎 Static analysis integration
+- 🤖 More specialized AI agents
+- 📋 Exportable code review reports
 
 ---
 
@@ -581,7 +580,8 @@ Some potential future improvements include:
 
 T.M.Janaka Namal Thennakoon
 
-Built with  using **Laravel, Laravel AI SDK, React, Inertia.js, and Google Gemini**.
+Built with using **Laravel, Laravel AI SDK, React, Inertia.js, and Google Gemini**.
 
 ---
+
 If you find this project interesting, consider giving the repository a **⭐** and sharing your feedback!
